@@ -93,8 +93,8 @@ annotation_fine_num_colors <- list("dorsal forebrain_cycl-48" = dorsal_forebrain
                                    "midbrain_PC-28" = midbrain_color_palette_fine_num[1],
                                    "midbrain_PC-49" = midbrain_color_palette_fine_num[2],
                                    "midbrain_PC-53" = midbrain_color_palette_fine_num[3],
-                                   "midbrain-5" = midbrain_color_palette_fine_num[4],
-                                   "midbrain-37" = midbrain_color_palette_fine_num[5],
+                                   "midbrain-like-5" = midbrain_color_palette_fine_num[4],
+                                   "midbrain-like-37" = midbrain_color_palette_fine_num[5],
                                    
                                    "diencephalon lin.-12" = diencephalon_lin_color_palette_fine_num[1],
                                    
@@ -171,7 +171,7 @@ annotation_fine_colors <- list(
   "striatum" = striatum_color_palette_fine[1],
   
   "midbrain_PC" = midbrain_color_palette_fine_num[1],
-  "midbrain" = midbrain_color_palette_fine_num[2],
+  "midbrain-like" = midbrain_color_palette_fine_num[2],
 
   "diencephalon lin." = diencephalon_lin_color_palette_fine[1],
   
@@ -216,7 +216,7 @@ annotation_coarse_colors <- list(
   "striatum" = striatum_color_palette_coarse[1],
   
   "midbrain prog." = midbrain_color_palette_coarse[1],
-  "midbrain" = midbrain_color_palette_coarse[2],
+  "midbrain-like" = midbrain_color_palette_coarse[2],
   
   "diencephalon lin." = diencephalon_lin_color_palette_coarse[1],
   

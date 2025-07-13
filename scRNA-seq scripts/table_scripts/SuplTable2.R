@@ -6,6 +6,8 @@ library(dplyr)
 setwd("./")
 DataDir <- "./scRNAseq_analysis/data/"
 
+source("./helper_functions/colors_metadata.R")
+
 ### in vitro ###
 combined.obj <- readRDS(paste0(DataDir,"combined.obj.RDS"))
 
@@ -35,6 +37,9 @@ rownames(conversion_table) <- NULL
 rm(marker)
 
 conversion_table_invitro <- conversion_table
+rownames(conversion_table_invitro) <- conversion_table_invitro$annotation_fine_num
+conversion_table_invitro <- conversion_table_invitro[names(annotation_fine_num_colors),]
+rownames(conversion_table_invitro) <- NULL
 
 ### in vivo - Braun et al ###
 combined.obj <- readRDS(paste0(DataDir,"integrated_braun_pw14.RDS"))

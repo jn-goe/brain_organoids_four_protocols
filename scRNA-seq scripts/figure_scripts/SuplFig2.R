@@ -102,3 +102,57 @@ p <- ggplot(data = combined.obj@meta.data,
 
 try(p + ggsave("figures/SFig2/SuplFig2C_boxplot_NEST_Score_per_celltype.pdf", 
                width = 190, height = 100, units = "mm"), silent = T)
+
+### Panel 2D ###
+
+# load Amin et al. data 
+obj <- readRDS("./GSE233574_OrganoidScreen_processed_SeuratObject.rds")
+pcadim <- 50
+k0 <- 100
+
+NESTres <- NESTscore(obj, "condition", 
+                     k_nn = k0, 
+                     ndims = pcadim,
+                     return_pairwise_eval = T, 
+                     show_heatmap = F,
+                     scale_column = F)
+obj <- NESTres$seuratobj
+
+umap_df <- cbind(obj@meta.data, obj@reductions$umap@cell.embeddings)
+
+p1 <- ggplot() +
+  geom_point(data = umap_df,aes(x = UMAP_1, y = UMAP_2, color = NESTscore_condition), size = 0.3, stroke = 0) + 
+  scale_color_viridis_c(name = "NEST-Score") + 
+  theme_void() + theme(text = element_text(size = 8, colour = "black"), 
+                       title = element_text(size = 8, colour = "black"),
+                       legend.text = element_text(size = 8, colour = "black"),
+                       strip.text = element_text(size = 8, colour = "black")) + 
+  ggtitle("") + scPhylo::guide_small_legend_cont() 
+ggsave(filename = "figures/SFig2/SuplFig2D_Aminetal_UMAP_NEST_Score.png", plot = p1, width = 60, height = 51, units = "mm", dpi = 500)
+
+p2 <- ggplot() +
+  geom_point(data = umap_df,aes(x = UMAP_1, y = UMAP_2, color = region), size = 0.3, stroke = 0) + 
+  theme_void() + theme(text = element_text(size = 8, colour = "black"), 
+                       title = element_text(size = 8, colour = "black"),
+                       legend.text = element_text(size = 8, colour = "black"),
+                       strip.text = element_text(size = 8, colour = "black")) + 
+  ggtitle("") + scPhylo::guide_small_legend_disc() + 
+  scale_color_discrete(name = "region")
+ggsave(filename = "figures/SFig2/SuplFig2D_Aminetal_UMAP_region_class.png", p2, width = 65, height = 51, units = "mm", dpi = 500)
+
+### Panel 2E ###
+
+png("figures/SFig2/SuplFig2E_Aminetal_Heatmap_morphogens.png",units = "in", res = 900,
+    width = 4.5, height = 3.6)
+pheatmap::pheatmap(NESTres$pairwise_matrix, 
+                   cluster_rows = T,
+                   cluster_cols = T,
+                   color = NESTres$proposed_params_pheatmap$color,
+                   breaks = NESTres$proposed_params_pheatmap$breaks,
+                   clustering_distance_cols = "correlation",
+                   clustering_distance_rows = "correlation",
+                   na_col = "transparent", 
+                   treeheight_col = 5, 
+                   treeheight_row = 3,
+                   fontsize = 6)
+dev.off()

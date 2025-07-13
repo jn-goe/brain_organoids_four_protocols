@@ -20,7 +20,8 @@ if(TRUE) {
   
   NESTres <- NESTscore(dorsal, "sample", 
                        k_nn = k0, 
-                       ndims = pcadim)
+                       ndims = pcadim,
+                       scale_column = F)
   dorsal <- NESTres$seuratobj
   thresh <- NEST_threshold_proposal(dorsal, "sample", min_nsamples = 1)
 
@@ -40,7 +41,8 @@ if(TRUE) {
   
   NESTres <- NESTscore(ventral, "sample", 
                        k_nn = k0, 
-                       ndims = pcadim)
+                       ndims = pcadim,
+                       scale_column = F)
   ventral <- NESTres$seuratobj
   thresh <- NEST_threshold_proposal(ventral, "sample", min_nsamples = 1)
   
@@ -60,7 +62,8 @@ if(TRUE) {
   
   NESTres <- NESTscore(midbrain, "sample", 
                        k_nn = k0, 
-                       ndims = pcadim)
+                       ndims = pcadim,
+                       scale_column = F)
   midbrain <- NESTres$seuratobj
   thresh <- NEST_threshold_proposal(midbrain, "sample", min_nsamples = 1)
   
@@ -80,7 +83,8 @@ if(TRUE) {
   
   NESTres <- NESTscore(striatum, "sample", 
                        k_nn = k0, 
-                       ndims = pcadim)
+                       ndims = pcadim,
+                       scale_column = F)
   striatum <- NESTres$seuratobj
   thresh <- NEST_threshold_proposal(striatum, "sample", min_nsamples = 1)
   
@@ -94,7 +98,8 @@ if(TRUE) {
 
   NESTres <- NESTscore(combined.obj, "sample", 
                        k_nn = k0, 
-                       ndims = pcadim)
+                       ndims = pcadim,
+                       scale_column = F)
   combined.obj <- NESTres$seuratobj
   thresh <- NEST_threshold_proposal(combined.obj, "sample", min_nsamples = 1)
   

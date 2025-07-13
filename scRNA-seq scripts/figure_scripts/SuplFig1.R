@@ -57,7 +57,7 @@ try(p+ggsave("figures/SFig1/SuplFig1A_QC_cell_numbers.pdf",
 marker_list <- 
   c("radial glia" = "PAX6",
     "radial glia" = "HOPX",
-    "dorsal intermediate progenitors" = "EOMES", 
+    "dorsal intermediate prog." = "EOMES", 
     
     "immature dorsal exc. neurons" = "SLA",
     "dorsal exc. neurons DL" = "TBR1",  
@@ -119,10 +119,10 @@ try(cowplot::plot_grid(p1,p2,p3,
       ggsave("figures/SFig1/SuplFig1B_UMAP_marker.png", width = 4.5, height = 7.5), silent = T)
 
 ### Panel 1C ###
-p <- ggplot(umap_df, aes(fill = annotation_fine_num, x=annotation_coarse)) + 
+p <- ggplot(umap_df, aes(fill = cell.line, x=annotation_coarse)) + 
   geom_bar() + ylab("number of cells") + 
-  guides(fill=guide_legend(title="protocol")) + 
-  scale_fill_manual(values = combined.obj@misc$annotation_fine_num_colors) +
+  guides(fill=guide_legend(title="cell line")) + 
+  scale_fill_manual(values = combined.obj@misc$cell.line_colors) +
   xlab(element_blank()) + theme_minimal() + 
   theme(axis.text.x = element_text(angle = 45, 
                                    vjust = 1, 
@@ -133,11 +133,11 @@ p <- ggplot(umap_df, aes(fill = annotation_fine_num, x=annotation_coarse)) +
         title = element_text(size = 8, colour = "black"),
         legend.text = element_text(size = 8, colour = "black"),
         strip.text = element_text(size = 8, colour = "black")) + 
-  facet_wrap(~protocol) + NoLegend()
+  facet_wrap(~protocol) #+ NoLegend()
 p
 
 try(p + ggsave("figures/SFig1/SuplFig1C_barplot_celltypes_scaled.pdf", 
-               width = 120, height = 72, units = "mm"), silent = T) 
+               width = 135, height = 72, units = "mm"), silent = T) 
 
 ### Panel 1D ### 
 # voxhunt Analysis #

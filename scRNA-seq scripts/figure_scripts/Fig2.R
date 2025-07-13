@@ -189,7 +189,8 @@ for(obj in ls.protocol) {
                        ndims = pcadim, 
                        return_pairwise_eval = T, 
                        show_heatmap = F, 
-                       heatmap_col = obj@misc$protocol_colors[[prot]])
+                       heatmap_col = obj@misc$protocol_colors[[prot]],
+                       scale_column = F)
   
   obj <- NESTres$seuratobj
   

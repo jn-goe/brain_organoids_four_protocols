@@ -45,23 +45,24 @@ for(i in seq(1,8,2)){
   metadata$pc_a = pc$x[,i]
   metadata$pc_b = pc$x[,i+1]
   
-  if(i == 1) {
+  if(i == 1 | i == 3) {
     p_time <- (ggplot(data=metadata, aes(x=pc_a, y=pc_b, color=time_num)) +
-                 geom_point(size=5) +
+                 geom_point(size=.5) +
                  xlab(paste0('PC ', i, ' (Expl. Var. = ', round(pc$expl_var[i], 1), ' %)')) + 
                  ylab(paste0('PC ', i+1, ' (Expl. Var. = ', round(pc$expl_var[i+1], 1), ' %)')) +
-                 theme_minimal() +
-                 theme(text=element_text(size=25)))
-    try(p_time + ggsave(paste0("figures/Fig4/Fig4B_PCA12_time.pdf"), width = 9, height = 8),silent = T)
-  } else if(i == 3) {
+                 scPhylo::guide_small_legend_cont() + scPhylo::theme_minimal_plots())
+    try(p_time + ggsave(paste0("figures/Fig4/Fig4B_PCA",i,i+1,"_time.png"), 
+                        width = 53, height = 30, units = "mm", dpi = 900),silent = T)
+  
+    
     p_prot <- (ggplot(data=metadata, aes(x=pc_a, y=pc_b, color=protocol)) +
-                 geom_point(size=5) +
+                 geom_point(size=.5) +
                  xlab(paste0('PC ', i, ' (Expl. Var. = ', round(pc$expl_var[i], 1), ' %)')) + 
                  ylab(paste0('PC ', i+1, ' (Expl. Var. = ', round(pc$expl_var[i+1], 1), ' %)')) +
-                 theme_minimal() +
-                 theme(text=element_text(size=25)) +
-                 scale_color_manual(values=protocol_colors))
-    try(p_prot + ggsave(paste0("figures/Fig4/Fig4C_PCA34_protocol.pdf"), width = 9, height = 8),silent = T)
+                 scale_color_manual(values = protocol_colors) +
+                 scPhylo::guide_small_legend_disc() + scPhylo::theme_minimal_plots())
+    try(p_prot + ggsave(paste0("figures/Fig4/Fig4C_PCA",i,i+1,"_protocol.png"), 
+                        width = 53, height = 30, units = "mm", dpi = 900),silent = T)
   } else if(i == 7) {
     p_cell <- (ggplot(data=metadata, aes(x=pc_a, y=pc_b, color=cell.line)) +
                  geom_point(size=5) +

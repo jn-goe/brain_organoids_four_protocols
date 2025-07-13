@@ -20,7 +20,7 @@ annotation_fine_num <- list("0" = "ventral forebrain_MGE-0",
                             "2" = "striatum-2",
                             "3" = "ventral forebrain_MGE-3",
                             "4" = "dorsal forebrain_im-4",
-                            "5" = "midbrain-5",
+                            "5" = "midbrain-like-5",
                             "6" = "dorsal forebrain_UL-6",
                             "7" = "dorsal forebrain_IP-7",
                             "8" = "stromal_fibroblasts-8",
@@ -52,7 +52,7 @@ annotation_fine_num <- list("0" = "ventral forebrain_MGE-0",
                             "34" = "muscle_cycl-34",
                             "35" = "muscle_cycl-35",
                             "36" = "ventral forebrain_cycl-36",
-                            "37" = "midbrain-37", 
+                            "37" = "midbrain-like-37", 
                             "38" = "muscle-38",
                             "39" = "eye_ganglion-39",
                             "40" = "eye_photoreceptors-40",
@@ -80,6 +80,7 @@ annotation_fine_num <- list("0" = "ventral forebrain_MGE-0",
                             "62" = "stromal_immune-62") 
 
 annotation_fine <- unlist(lapply(annotation_fine_num, function(x) strsplit(x,"-")[[1]][1]))
+annotation_fine[annotation_fine == "midbrain"] <- "midbrain-like"
 annotation_coarse <- annotation_fine
 
 annotation_coarse[grepl("_cycl|_PC|_IP", annotation_coarse)] <- 
@@ -125,8 +126,8 @@ annotation_fine_num <- factor(annotation_fine_num, levels =
                                   "midbrain_PC-28",
                                   "midbrain_PC-49",
                                   "midbrain_PC-53",
-                                  "midbrain-5",
-                                  "midbrain-37",
+                                  "midbrain-like-5",
+                                  "midbrain-like-37",
                                   
                                   "diencephalon lin.-12",
 
@@ -194,7 +195,7 @@ annotation_fine <- factor(annotation_fine, levels =
                                   "striatum",
 
                                   "midbrain_PC",
-                                  "midbrain",
+                                  "midbrain-like",
 
                                   "diencephalon lin.",
 
@@ -234,7 +235,7 @@ annotation_coarse <- factor(annotation_coarse, levels =
                               "striatum",
 
                               "midbrain prog.",
-                              "midbrain",
+                              "midbrain-like",
                               
                               "diencephalon lin.",
 

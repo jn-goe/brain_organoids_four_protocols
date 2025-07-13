@@ -179,9 +179,20 @@ try(cowplot::plot_grid(p1,p1b, rel_widths = c(1,.6)) +
 
 ### SuplFig3B ###
 
-p0 <- ggplot(umap_invitro,  aes(fill=invivo_mixed, x=annotation_coarse)) + 
-  geom_bar(position="fill") + ylab("ratio") + xlab("") +
-  guides(fill=guide_legend(title="")) + theme_minimal() +       
+combined.obj <- readRDS("./scRNAseq_analysis/data/integrated_braun_pw14.RDS")
+umap_invitro <- cbind(combined.obj@meta.data, combined.obj@reductions$umap@cell.embeddings)
+umap_invitro <- umap_invitro[which(umap_invitro$sample == "invitro"),]
+umap_invitro$annotation_coarse <- factor(umap_invitro$annotation_coarse, 
+                                         levels = names(annotation_coarse_colors))
+
+p0 <- ggplot(data = umap_invitro, 
+            aes(fill = annotation_coarse,
+                x = annotation_coarse, 
+                y = NESTscore_sample)) + 
+  xlab("") + ylab("NEST-Score") +
+  geom_boxplot(varwidth = TRUE, alpha = 0.5, outlier.size = .1) + 
+  guides(fill=guide_legend(title="")) + 
+  scale_fill_manual(values = unlist(annotation_coarse_colors)) + theme_minimal() + 
   theme(axis.text.x = element_text(angle = 45, 
                                    hjust = 1, 
                                    vjust = 1.05),
@@ -190,10 +201,27 @@ p0 <- ggplot(umap_invitro,  aes(fill=invivo_mixed, x=annotation_coarse)) +
         axis.title = element_text(size = 8, colour = "black"),
         title = element_text(size = 8, colour = "black"),
         legend.text = element_text(size = 8, colour = "black"),
-        strip.text = element_text(size = 8, colour = "black")) + NoLegend() + 
-  scale_fill_manual(values = c("well-mixed" = "#6964aaff",
-                               "in vitro specific" = "#1b9e76ff"))
-try(p0 + ggsave("figures/SFig3/SuplFig3B_Barplot_mixed_celltypes.pdf", width = 3, height = 2), silent = T)
+        strip.text = element_text(size = 8, colour = "black")) +
+  #geom_hline(yintercept = -1, lty = 2) +
+  NoLegend()
+p0
+try(p0 + ggsave("figures/SFig3/SuplFig3B_Boxplot_mixed_celltypes.pdf", width = 3, height = 2), silent = T)
+
+# p0 <- ggplot(umap_invitro,  aes(fill=invivo_mixed, x=annotation_coarse)) + 
+#   geom_bar(position="fill") + ylab("ratio") + xlab("") +
+#   guides(fill=guide_legend(title="")) + theme_minimal() +       
+#   theme(axis.text.x = element_text(angle = 45, 
+#                                    hjust = 1, 
+#                                    vjust = 1.05),
+#         text = element_text(size = 8, colour = "black"), 
+#         axis.text = element_text(size = 6, colour = "black"), 
+#         axis.title = element_text(size = 8, colour = "black"),
+#         title = element_text(size = 8, colour = "black"),
+#         legend.text = element_text(size = 8, colour = "black"),
+#         strip.text = element_text(size = 8, colour = "black")) + NoLegend() + 
+#   scale_fill_manual(values = c("well-mixed" = "#6964aaff",
+#                                "in vitro specific" = "#1b9e76ff"))
+# try(p0 + ggsave("figures/SFig3/SuplFig3B_Barplot_mixed_celltypes.pdf", width = 3, height = 2), silent = T)
 
 ### SuplFig3C ###
 #---- bhaduri in vivo ----#
@@ -222,9 +250,20 @@ try(pa + ggsave("figures/SFig3/SuplFig3C_cellnumbers_invivo.pdf",
 
 ### SuplFig3D ###
 
-p0 <- ggplot(umap_invitro, aes(fill=invivo_mixed, x=annotation_coarse)) + 
-  geom_bar(position="fill") + ylab("ratio") + xlab("") +
-  guides(fill=guide_legend(title=""))  + theme_minimal() +   
+combined.obj <- readRDS("./scRNAseq_analysis/data/integrated_bhaduri_GW141718_sampled.RDS")
+umap_invitro <- cbind(combined.obj@meta.data, combined.obj@reductions$umap@cell.embeddings)
+umap_invitro <- umap_invitro[which(umap_invitro$sample == "invitro"),]
+umap_invitro$annotation_coarse <- factor(umap_invitro$annotation_coarse, 
+                                         levels = names(annotation_coarse_colors))
+
+p0 <- ggplot(data = umap_invitro, 
+             aes(fill = annotation_coarse,
+                 x = annotation_coarse, 
+                 y = NESTscore_sample)) + 
+  xlab("") + ylab("NEST-Score") +
+  geom_boxplot(varwidth = TRUE, alpha = 0.5, outlier.size = .1) + 
+  guides(fill=guide_legend(title="")) + 
+  scale_fill_manual(values = unlist(annotation_coarse_colors)) + theme_minimal() + 
   theme(axis.text.x = element_text(angle = 45, 
                                    hjust = 1, 
                                    vjust = 1.05),
@@ -233,12 +272,30 @@ p0 <- ggplot(umap_invitro, aes(fill=invivo_mixed, x=annotation_coarse)) +
         axis.title = element_text(size = 8, colour = "black"),
         title = element_text(size = 8, colour = "black"),
         legend.text = element_text(size = 8, colour = "black"),
-        strip.text = element_text(size = 8, colour = "black")) + NoLegend() + 
-  scale_fill_manual(values = c("well-mixed" = "#6964aaff",
-                               "in vitro specific" = "#1b9e76ff"))
+        strip.text = element_text(size = 8, colour = "black")) +
+  #geom_hline(yintercept = -1, lty = 2) +
+  NoLegend()
 p0
+try(p0 + ggsave("figures/SFig3/SuplFig3D_Boxplot_mixed_celltypes.pdf", width = 3, height = 2), silent = T)
 
-try(p0 + ggsave("figures/SFig3/SuplFig3D_Barplot_mixed_celltypes.pdf", width = 3, height = 2), silent = T)
+
+# p0 <- ggplot(umap_invitro, aes(fill=invivo_mixed, x=annotation_coarse)) + 
+#   geom_bar(position="fill") + ylab("ratio") + xlab("") +
+#   guides(fill=guide_legend(title=""))  + theme_minimal() +   
+#   theme(axis.text.x = element_text(angle = 45, 
+#                                    hjust = 1, 
+#                                    vjust = 1.05),
+#         text = element_text(size = 8, colour = "black"), 
+#         axis.text = element_text(size = 6, colour = "black"), 
+#         axis.title = element_text(size = 8, colour = "black"),
+#         title = element_text(size = 8, colour = "black"),
+#         legend.text = element_text(size = 8, colour = "black"),
+#         strip.text = element_text(size = 8, colour = "black")) + NoLegend() + 
+#   scale_fill_manual(values = c("well-mixed" = "#6964aaff",
+#                                "in vitro specific" = "#1b9e76ff"))
+# p0
+# 
+# try(p0 + ggsave("figures/SFig3/SuplFig3D_Barplot_mixed_celltypes.pdf", width = 3, height = 2), silent = T)
 
 ### Fig 3E ###
 set.seed(123)

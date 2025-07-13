@@ -106,24 +106,25 @@ print(cowplot::plot_grid(p1,p2,p3,p4, nrow = 2, ncol = 2))
 dev.off()
 
 ### Panel 1D ###
-p <- ggplot(umap_df, aes(fill = protocol, 
-                         x = annotation_coarse)) + 
-  geom_bar(position = 'fill') + ylab("ratio of cells") + 
-  guides(fill=guide_legend(title="protocol")) + 
-  scale_fill_manual(values = protocol_colors) +
-  xlab(element_blank()) + theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+p <- ggplot(umap_df, aes(fill = annotation_fine_num, x=annotation_coarse)) + 
+  geom_bar() + ylab("number of cells") + 
+  guides(fill=guide_legend(title="cell line")) + 
+  scale_fill_manual(values = combined.obj@misc$annotation_fine_num_colors) +
+  xlab(element_blank()) + theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 45, 
+                                   vjust = 1, 
+                                   hjust = 1),
         text = element_text(size = 8, colour = "black"), 
         axis.text = element_text(size = 6, colour = "black"), 
         axis.title = element_text(size = 8, colour = "black"),
         title = element_text(size = 8, colour = "black"),
         legend.text = element_text(size = 8, colour = "black"),
-        strip.text = element_text(size = 8, colour = "black"))
+        strip.text = element_text(size = 8, colour = "black")) + 
+  facet_wrap(~protocol) + NoLegend()
 p
 
 try(p + ggsave("figures/Fig1/Fig1D_barplot_celltypes.pdf", 
-               width = 110, height = 65, units = "mm"), silent = T) 
-
+               width = 100, height = 65, units = "mm"), silent = T) 
 
 ### Panel 1E ### 
 # voxhunt Analysis #
